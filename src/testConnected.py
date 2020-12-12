@@ -7,6 +7,9 @@ class TestConnections:
         pass
 
     def TestCornersConnected(self, corner1, corner2, lines_array, threshold):
+        if np.array_equal(corner1, corner2):
+            return False
+
         connected = False
 
         corner1_x, corner1_y = corner1.ravel()
@@ -18,8 +21,7 @@ class TestConnections:
             if(hypot(corner1_x - line_x1, corner1_y - line_y1) < threshold
                and hypot(corner2_x - line_x2, corner2_y - line_y2) < threshold
                or hypot(corner2_x - line_x1, corner2_y - line_y1) < threshold
-               and hypot(corner1_x - line_x2, corner1_y - line_y2) < threshold
-               and not np.array_equal(corner1, corner2)):
+               and hypot(corner1_x - line_x2, corner1_y - line_y2) < threshold):
 
                 connected = True
 
