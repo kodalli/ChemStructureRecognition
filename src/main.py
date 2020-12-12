@@ -3,10 +3,9 @@ import numpy as np
 
 from lines import *
 from corners import *
-from testConnected import *
+from testConnected import find_connected_corners
 
 WINDOW_SIZE = (1024, 1024, 3)
-
 
 # mouse callback function
 def line_drawing(event, x, y, flags, param):
@@ -19,29 +18,6 @@ def line_drawing(event, x, y, flags, param):
                 color=(255, 255, 255), thickness=2)
         cv.circle(sketch, (x, y), 3, [0, 0, 255], 5, cv.FILLED)
 
-
-def find_connected_corners(corners_array, img):
-    corners_comparison_array = corners_array
-
-    j = 0
-    k = 0
-
-    graph = {i: set() for i in range(len(corners_array))}
-    for corner in corners_array:
-        test_connections_init = TestConnections()
-        cv.circle(img, (corner[0], corner[1]), radius=100)
-        for corner_comparison in corners_comparison_array:
-            connected = test_connections_init.TestCornersConnected(corner, corner_comparison, lines_array, threshold=100)
-            if connected:
-                # print(f"corner {j} and {k} are connected")
-                graph[j].add(k)
-                graph[k].add(j)
-                # print(corner, corner_comparison)
-            k += 1
-        k = 0
-        j += 1
-
-    print(graph, end='\n\n')
 
 
 # Create a black image, a window and bind the function to window
@@ -82,6 +58,6 @@ while (1):
     elif k == 27:
         break
     elif k == ord('n'):
-        corners_img = (corners_array, corners_img)
+        find_connected_corners(corners_array, lines_array, corners_img)
 
 cv.destroyAllWindows()
