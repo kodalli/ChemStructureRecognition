@@ -1,3 +1,5 @@
+import itertools
+
 
 class CyclicGraph:
     def __init__(self, edges=None):
@@ -6,16 +8,38 @@ class CyclicGraph:
         self.graph = edges
         self.cycles = []
 
-    def find_all_cycles(self):
+    def find_all_cycles(self, remove_overlapping=True):
         # global graph
         # global cycles
         for edge in self.graph:
             for node in edge:
                 self.find_new_cycles([node])
+
+        if remove_overlapping:
+            self.remove_overlapping_cycles()
+
         for cy in self.cycles:
             path = [str(node) for node in cy]
             s = ",".join(path)
             print(s)
+
+    def remove_overlapping_cycles(self):
+        """
+            for each cycle in cycles -> {some set}
+            remove this cycle if other cycles are a subset of the current cycle
+        """
+        cycles_sets = []
+        for cycle in self.cycles:
+            cycles_sets.append(set(cycle))
+
+        removed_overlap = cycles_sets.copy()
+        for i in range(len(cycles_sets)):
+            for j in range(len(cycles_sets)):
+                if i != j and cycles_sets[i].issubset(cycles_sets[j]):
+                    if cycles_sets[j] in removed_overlap:
+                        removed_overlap.remove(cycles_sets[j])
+                        break
+        self.cycles = removed_overlap
 
     def find_new_cycles(self, path):
         start_node = path[0]
