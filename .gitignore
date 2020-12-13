@@ -127,3 +127,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignore IDE specific files
+.idea/
+.vscode/
+*.sw*
