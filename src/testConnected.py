@@ -1,5 +1,6 @@
 import numpy as np
 from math import hypot
+from detectCycle import Graph
 
 
 def test_corners_connected(corner1, corner2, lines_array, threshold):
@@ -23,7 +24,7 @@ def test_corners_connected(corner1, corner2, lines_array, threshold):
     return connected
 
 
-def find_connected_corners(corners_array, lines_array):
+def find_connected_corners(corners_array, lines_array, thresh):
     corners_comparison_array = corners_array
 
     j = 0
@@ -32,7 +33,7 @@ def find_connected_corners(corners_array, lines_array):
     graph = {i: set() for i in range(len(corners_array))}
     for corner in corners_array:
         for corner_comparison in corners_comparison_array:
-            connected = test_corners_connected(corner, corner_comparison, lines_array, threshold=100)
+            connected = test_corners_connected(corner, corner_comparison, lines_array, threshold=thresh)
             if connected:
                 # print(f"corner {j} and {k} are connected")
                 # print(corner, corner_comparison)
@@ -42,4 +43,11 @@ def find_connected_corners(corners_array, lines_array):
         k = 0
         j += 1
 
+    graph_obj = Graph(len(graph))
+    for key, val in graph.items():
+        for corner in val:
+            graph_obj.add_edge(key, corner)
+
+    print(graph_obj.is_cyclic())
     print(graph, end='\n\n')
+
