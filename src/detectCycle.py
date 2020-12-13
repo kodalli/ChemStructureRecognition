@@ -1,5 +1,6 @@
 # Python Program to detect cycle in an undirected graph
 from collections import defaultdict
+from detectCyclePaths import CyclicGraph
 
 
 # This class represents a undirected
@@ -13,7 +14,7 @@ class Graph:
 
         # Default dictionary to store graph
         self.graph = defaultdict(set)
-
+        self.edges = set()
         # Function to add an edge to graph
 
     def add_edge(self, v, w):
@@ -23,6 +24,8 @@ class Graph:
 
         # Add v to w_s list
         self.graph[w].add(v)
+
+        self.edges.add((v, w))
 
     def __str__(self):
         return f"{self.graph}"
@@ -70,6 +73,13 @@ class Graph:
             # is already visited
             if not visited[i]:
                 if self.is_cyclic_util(i, visited, -1):
+                    self.convert_to_cyclic_graph_object()
                     return True
 
         return False
+
+    def convert_to_cyclic_graph_object(self):
+        # pairs = {(0, 1), (0, 1), (1, 0), (1, 2), (1, 0), (2, 1)}
+        self.edges = set((a, b) if a <= b else (b, a) for a, b in self.edges)
+        cyclic_graph = CyclicGraph(self.edges)
+        cyclic_graph.find_all_cycles()
