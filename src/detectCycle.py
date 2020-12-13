@@ -73,13 +73,19 @@ class Graph:
             # is already visited
             if not visited[i]:
                 if self.is_cyclic_util(i, visited, -1):
-                    self.convert_to_cyclic_graph_object()
                     return True
 
         return False
+
+    def get_all_cycles(self):
+        if self.is_cyclic():
+            return self.convert_to_cyclic_graph_object()
+        else:
+            print("Graph is not cyclic")
+            return None
 
     def convert_to_cyclic_graph_object(self):
         # pairs = {(0, 1), (0, 1), (1, 0), (1, 2), (1, 0), (2, 1)}
         self.edges = set((a, b) if a <= b else (b, a) for a, b in self.edges)
         cyclic_graph = CyclicGraph(self.edges)
-        cyclic_graph.find_all_cycles()
+        return cyclic_graph.find_all_cycles()

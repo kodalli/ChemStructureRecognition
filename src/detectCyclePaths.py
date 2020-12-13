@@ -1,5 +1,3 @@
-import itertools
-
 
 class CyclicGraph:
     def __init__(self, edges=None):
@@ -22,6 +20,7 @@ class CyclicGraph:
             path = [str(node) for node in cy]
             s = ",".join(path)
             print(s)
+        return self.cycles
 
     def remove_overlapping_cycles(self):
         """
@@ -39,6 +38,7 @@ class CyclicGraph:
                     if cycles_sets[j] in removed_overlap:
                         removed_overlap.remove(cycles_sets[j])
                         break
+
         self.cycles = removed_overlap
 
     def find_new_cycles(self, path):
