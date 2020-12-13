@@ -30,24 +30,17 @@ def find_connected_corners(corners_array, lines_array, thresh):
     j = 0
     k = 0
 
-    graph = {i: set() for i in range(len(corners_array))}
+    graph = Graph(len(corners_array))
     for corner in corners_array:
         for corner_comparison in corners_comparison_array:
             connected = test_corners_connected(corner, corner_comparison, lines_array, threshold=thresh)
             if connected:
                 # print(f"corner {j} and {k} are connected")
                 # print(corner, corner_comparison)
-                graph[j].add(k)
-                graph[k].add(j)
+                graph.add_edge(k, j)
             k += 1
         k = 0
         j += 1
 
-    graph_obj = Graph(len(graph))
-    for key, val in graph.items():
-        for corner in val:
-            graph_obj.add_edge(key, corner)
-
-    print(graph_obj.is_cyclic())
+    print(graph.is_cyclic())
     print(graph, end='\n\n')
-

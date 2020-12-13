@@ -12,20 +12,22 @@ class Graph:
         self.V = vertices  # No. of vertices
 
         # Default dictionary to store graph
-        self.graph = defaultdict(list)
+        self.graph = defaultdict(set)
 
         # Function to add an edge to graph
 
     def add_edge(self, v, w):
 
         # Add w to v_s list
-        self.graph[v].append(w)
+        self.graph[v].add(w)
 
         # Add v to w_s list
-        # self.graph[w].append(v)
+        self.graph[w].add(v)
 
-        # A recursive function that uses
+    def __str__(self):
+        return f"{self.graph}"
 
+    # A recursive function that uses
     # visited[] and parent to detect
     # cycle in subgraph reachable from vertex v.
     def is_cyclic_util(self, v, visited, parent):
