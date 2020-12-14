@@ -4,6 +4,7 @@ from lines import draw_lines
 from corners import draw_corners
 from testConnected import find_connected_corners
 from detectCycle import Graph
+from output import *
 
 WINDOW_SIZE = (1024, 1024, 3)
 COLOR_WHITE = (255, 255, 255)
@@ -49,7 +50,8 @@ while (1):
     line_img, lines_array = draw_lines(sketch, COLOR_GREEN, 2, sketch_lines_d)
 
     # draw corners and stores coordinates in corners_array
-    corners_img, corners_array = draw_corners(sketch, line_img, 100, 0.5, 30, THRESHOLD, COLOR_GREEN)
+    corners_img, corners_array = draw_corners(
+        sketch, line_img, 100, 0.5, 30, THRESHOLD, COLOR_GREEN)
 
     # display corners in new window corners
     cv.imshow('corners & lines', corners_img)
@@ -66,6 +68,8 @@ while (1):
     elif k == 27:
         break
     elif k == ord('n'):
-        graph = find_connected_corners(corners_array, np.array(sketch_lines), THRESHOLD)
+        graph = find_connected_corners(
+            corners_array, np.array(sketch_lines), THRESHOLD)
+        draw_molecule(corners_array, graph, sketch)
 
 cv.destroyAllWindows()
