@@ -3,6 +3,7 @@ import numpy as np
 from lines import draw_lines
 from corners import draw_corners
 from testConnected import find_connected_corners
+from detectCycle import Graph
 
 WINDOW_SIZE = (1024, 1024, 3)
 COLOR_WHITE = (255, 255, 255)
@@ -65,6 +66,6 @@ while (1):
     elif k == 27:
         break
     elif k == ord('n'):
-        find_connected_corners(corners_array, np.array(sketch_lines), THRESHOLD)
+        graph = find_connected_corners(corners_array, np.array(sketch_lines), THRESHOLD)
 
 cv.destroyAllWindows()

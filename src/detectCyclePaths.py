@@ -19,7 +19,7 @@ class CyclicGraph:
         for cy in self.cycles:
             path = [str(node) for node in cy]
             s = ",".join(path)
-            print(s)
+            # print(s)
         return self.cycles
 
     def remove_overlapping_cycles(self):

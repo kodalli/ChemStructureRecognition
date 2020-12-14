@@ -42,5 +42,5 @@ def find_connected_corners(corners_array, lines_array, thresh):
         k = 0
         j += 1
 
-    print(graph.get_all_cycles())
-    print(graph, end='\n\n')
+    return graph
+    # print(graph, end='\n\n')
