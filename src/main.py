@@ -4,7 +4,7 @@ from lines import draw_lines
 from corners import draw_corners
 from testConnected import find_connected_corners
 from detectCycle import Graph
-from output import *
+from output import draw_molecule
 
 WINDOW_SIZE = (1024, 1024, 3)
 COLOR_WHITE = (255, 255, 255)

@@ -1,10 +1,13 @@
 # Python Program to detect cycle in an undirected graph
 from collections import defaultdict
 from detectCyclePaths import CyclicGraph
-
+import numpy as np
+import math
 
 # This class represents a undirected
 # graph using adjacency list representation
+
+
 class Graph:
 
     def __init__(self, vertices):
@@ -76,6 +79,11 @@ class Graph:
                     return True
 
         return False
+
+    def get_average_bond_length(self, corners_array):
+        bond = int(np.mean(np.array([math.hypot(corners_array[i][0] - corners_array[j]
+                                                [0], corners_array[i][1] - corners_array[j][1]) for i, j in self.edges])))
+        return bond
 
     def get_all_cycles(self):
         if self.is_cyclic():
