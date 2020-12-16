@@ -4,7 +4,7 @@ from detectCycle import Graph
 
 
 def draw_molecule(corners_array, graph: Graph, img):
-    cycles = graph.get_all_cycles()
+    cycles, connected_cycles = graph.get_all_cycles()
     bond_length = graph.get_average_bond_length(
         corners_array.reshape((corners_array.shape[0], 2)))
 
@@ -36,3 +36,10 @@ def draw_first_cycle(cycle, corners, img, bond_length):
     img = cv.polylines(img, [points],
                        True, (0, 255, 0), 2)
     return img
+
+
+""" 
+    find two closest points to connect
+    translate center, and add degree offest to rotate 
+    rotate and translate to achieve connection between two heterocycles
+"""
