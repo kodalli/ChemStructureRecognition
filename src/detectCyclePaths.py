@@ -17,6 +17,9 @@ class CyclicGraph:
         return self.cycles, self.find_connected_cycles()
 
     def find_connected_cycles(self):
+        """
+            returns the cycles that are connected, the indexes in self.cycles
+        """
         cycles_sets = []
         for cycle in self.cycles:
             cycles_sets.append(set(cycle))
