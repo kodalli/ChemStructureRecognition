@@ -7,10 +7,12 @@ from detectCycle import Graph
 
 def draw_molecule(corners_array, graph: Graph, img):
     # corners array has the coordinates of each node on the graph
-    cycles, connected_cycles = graph.get_all_cycles()
+    z = graph.get_all_cycles()
 
-    if cycles is None:
+    if z is None:
         return
+
+    cycles, connected_cycles = z
 
     bond_length = graph.get_average_bond_length(
         corners_array.reshape((corners_array.shape[0], 2)))
@@ -70,6 +72,7 @@ def draw_first_cycle(cycle, corners, img, bond_length):
 
 
 # !!! IF HEXAGONS DRAWNN PARALLEL WITH SCREEN DOESN'T DRAW PROPERLY
+# The wrong shared nodes are being given, thus the line of relfection is incorrect
 def draw_connected_cycle_by_reflection(connected_nodes, cycle_to_flip_points, img):
     """
         Given point P = (x, y)
@@ -83,6 +86,9 @@ def draw_connected_cycle_by_reflection(connected_nodes, cycle_to_flip_points, im
     # make line equation
     pts = np.array([cycle_to_flip_points[connected_nodes[0]], cycle_to_flip_points[connected_nodes[1]]])
 
+    cv.circle(img, tuple(pts[0]), 10, (255, 0, 0), -1)
+    cv.circle(img, tuple(pts[1]), 10, (255, 0, 0), -1)
+
     m, b, _, _, _ = stats.linregress(pts[:,0], pts[:,1])
 
     reflected_points = []
@@ -90,7 +96,7 @@ def draw_connected_cycle_by_reflection(connected_nodes, cycle_to_flip_points, im
         x, y = val
         u = ((1 - m**2)*x + 2*m*y - 2*m*b) / (m**2 + 1)
         v = ((m**2 - 1)*y + 2*m*x + 2*b) / (m**2 + 1)
-        if u is None or v is None:
+        if np.isnan(u) or np.isnan(v):
             reflected_points.append((int(2*pts[0,0]-x) , int(y)))
         else:
             reflected_points.append((int(u), int(v)))
