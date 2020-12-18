@@ -13,21 +13,13 @@ class Graph:
     def __init__(self, vertices):
 
         # No. of vertices
-        self.V = vertices  # No. of vertices
-
-        # Default dictionary to store graph
+        self.V = vertices
         self.graph = defaultdict(set)
         self.edges = set()
-        # Function to add an edge to graph
 
     def add_edge(self, v, w):
-
-        # Add w to v_s list
         self.graph[v].add(w)
-
-        # Add v to w_s list
         self.graph[w].add(v)
-
         self.edges.add((v, w))
 
     def __str__(self):

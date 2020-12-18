@@ -1,0 +1,28 @@
+---Conda Environments---
+
+Specify contents of brand new environment w/ default packages   - conda create -n envname
+Can also specify python version and/or packages                 - conda create -n envname python-3.8 numpy
+
+Save/Export an environment                                      - conda env export -f environment.yml
+Create/Load an environment                                      - conda env create -f environment.yml
+Check contents of environment                                   - less environment.yml
+press q to quit
+
+Activate environment                                            - conda activate envname
+Deactivate environment                                          - conda deactivate
+
+To install modules                                              - pip install or conda install
+
+Go into environment.yml to find the envname 
+
+In vscode make sure to:
+-> ctrl + shift + p 
+-> python interpreter 
+-> select the conda environment
+
+---Commit And Push To Github On Linux---
+
+Github desktop has slow stage times so by committing
+changes in vscode you can greatly increase the
+speed of the git commit then push to origin
+using github desktop.

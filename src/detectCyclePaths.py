@@ -7,8 +7,6 @@ class CyclicGraph:
         self.cycles = []
 
     def find_all_cycles(self, remove_overlapping=True):
-        # global graph
-        # global cycles
         for edge in self.graph:
             for node in edge:
                 self.find_new_cycles([node])
@@ -16,11 +14,21 @@ class CyclicGraph:
         if remove_overlapping:
             self.remove_overlapping_cycles()
 
-        for cy in self.cycles:
-            path = [str(node) for node in cy]
-            s = ",".join(path)
-            # print(s)
-        return self.cycles
+        return self.cycles, self.find_connected_cycles()
+
+    def find_connected_cycles(self):
+        """
+            returns the cycles that are connected, the indexes in self.cycles
+        """
+        cycles_sets = []
+        for cycle in self.cycles:
+            cycles_sets.append(set(cycle))
+        connected = []
+        for i in range(len(cycles_sets)):
+            for j in range(len(cycles_sets)):
+                if i != j and not cycles_sets[i].isdisjoint(cycles_sets[j]):
+                    connected.append((i, j))
+        return set((a, b) if a <= b else (b, a) for a, b in connected)
 
     def remove_overlapping_cycles(self):
         """
@@ -43,8 +51,6 @@ class CyclicGraph:
 
     def find_new_cycles(self, path):
         start_node = path[0]
-        # next_node = None
-        # sub = []
 
         # visit each edge and each node of each edge
         for edge in self.graph:
@@ -59,10 +65,10 @@ class CyclicGraph:
                     sub = [next_node]
                     sub.extend(path)
                     # explore extended path
-                    self.find_new_cycles(sub);
+                    self.find_new_cycles(sub)
                 elif len(path) > 2 and next_node == path[-1]:
                     # cycle found
-                    p = self.rotate_to_smallest(path);
+                    p = self.rotate_to_smallest(path)
                     inv = self.invert(p)
                     if self.is_new(p) and self.is_new(inv):
                         self.cycles.append(p)
@@ -84,6 +90,7 @@ class CyclicGraph:
 
 if __name__ == '__main__':
     # graph = [[1, 2], [1, 3], [1, 4], [2, 3], [3, 4], [2, 6], [4, 6], [8, 7], [8, 9], [9, 7]]
-    graph = {(1, 2), (1, 3), (1, 4), (2, 3), (3, 4), (2, 6), (4, 6), (8, 7), (8, 9), (9, 7)}
+    graph = {(1, 2), (1, 3), (1, 4), (2, 3), (3, 4),
+             (2, 6), (4, 6), (8, 7), (8, 9), (9, 7)}
     graph_obj = CyclicGraph(graph)
     graph_obj.find_all_cycles()
