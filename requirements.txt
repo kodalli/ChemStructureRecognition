@@ -8,8 +8,7 @@ jupyter-client==6.1.7
 jupyter-core==4.7.0
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
-numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1603479643886/work
-opencv-python==4.4.0.46
+opencv-python~=4.4.0.44
 pycodestyle==2.6.0
 pyflakes==2.2.0
 pylint==2.6.0
@@ -20,3 +19,6 @@ sketcher==1.0.3
 texttable==1.6.3
 tornado==6.1
 wrapt==1.12.1
+
+numpy~=1.17.0
+scipy~=1.2.1
