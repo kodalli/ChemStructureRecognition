@@ -55,8 +55,8 @@ def draw_molecule(corners_array, graph: Graph, img):
             print("connected cycles dictionary", connected_cycles_dict)
 
             # !! KEY ERROR IF > 2 CYCLES
-            img = draw_connected_cycle_by_reflection(connected_nodes, drawn_cycle_pts_dict[
-                list(drawn_cycles_that_are_connected)[0]], img)
+            img = draw_connected_cycle_by_reflection(connected_nodes,
+                                                     drawn_cycle_pts_dict[list(drawn_cycles_that_are_connected)[0]], img)
             drawn.add(index)
 
     cv.imshow("drawn", img)
