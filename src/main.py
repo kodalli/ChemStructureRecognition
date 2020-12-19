@@ -6,7 +6,7 @@ from testConnected import find_connected_corners
 from detectCycle import Graph
 from output import draw_molecule
 
-WINDOW_SIZE = (1024, 1024, 3)
+WINDOW_SIZE = (720, 1280, 3)
 COLOR_WHITE = (255, 255, 255)
 COLOR_RED = (0, 0, 255)
 COLOR_GREEN = (0, 255, 0)

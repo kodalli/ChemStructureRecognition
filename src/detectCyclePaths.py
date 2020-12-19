@@ -24,10 +24,14 @@ class CyclicGraph:
         for cycle in self.cycles:
             cycles_sets.append(set(cycle))
         connected = []
+
+        # print("cycle sets", cycles_sets)
+
         for i in range(len(cycles_sets)):
             for j in range(len(cycles_sets)):
                 if i != j and not cycles_sets[i].isdisjoint(cycles_sets[j]):
                     connected.append((i, j))
+        # print("connected", connected)
         return set((a, b) if a <= b else (b, a) for a, b in connected)
 
     def remove_overlapping_cycles(self):
