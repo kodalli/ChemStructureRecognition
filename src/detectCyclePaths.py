@@ -38,6 +38,11 @@ class CyclicGraph:
         """
             for each cycle in cycles -> {some set}
             remove this cycle if other cycles are a subset of the current cycle
+
+            err: cycles that do not contain all the nodes of the smaller cycles
+            that make it up are being detected. The current way large cycles 
+            are removed is by checking if the large cycle is some combination of
+            smaller cycles by checking if it contains all their nodes. 
         """
         cycles_sets = []
         for cycle in self.cycles:
@@ -50,6 +55,12 @@ class CyclicGraph:
                     if cycles_sets[j] in removed_overlap:
                         removed_overlap.remove(cycles_sets[j])
                         break
+        # quick fix just remove cycles > 6 size
+        i = 0
+        while(i < len(removed_overlap)):
+            if len(removed_overlap[i]) > 6:
+                removed_overlap.pop(i)
+            i += 1
 
         self.cycles = removed_overlap
 

@@ -21,8 +21,10 @@ def draw_molecule(corners_array, graph: Graph, img):
     for cy1, cy2 in list(connected_cycles):  # indexes in cycles
         z = list(set(cycles[cy1]).intersection(set(cycles[cy2])))
         i, j = z[0], z[1]  # connected nodes between two cycles
-        cv.circle(img, (corners_array[i][0][0], corners_array[i][0][1]), 10, (255, 0, 0), -1)
-        cv.circle(img, (corners_array[j][0][0], corners_array[j][0][1]), 10, (255, 0, 0), -1)
+        cv.circle(
+            img, (corners_array[i][0][0], corners_array[i][0][1]), 10, (255, 0, 0), -1)
+        cv.circle(
+            img, (corners_array[j][0][0], corners_array[j][0][1]), 10, (255, 0, 0), -1)
         connected_cycles_dict[cy1].add(cy2)
         connected_cycles_dict[cy2].add(cy1)
 
@@ -30,9 +32,11 @@ def draw_molecule(corners_array, graph: Graph, img):
 
     drawn = set()
     drawn_cycle_pts_dict = {}
-    for index, cycle in enumerate(cycles):  # each cycle in cycles is a list with nodes [1,2,3,4...]
+    # each cycle in cycles is a list with nodes [1,2,3,4...]
+    for index, cycle in enumerate(cycles):
         cycles_connected_to_current_cycle = connected_cycles_dict[index]
-        drawn_cycles_that_are_connected = cycles_connected_to_current_cycle.intersection(drawn)
+        drawn_cycles_that_are_connected = cycles_connected_to_current_cycle.intersection(
+            drawn)
         if len(drawn_cycles_that_are_connected) == 0:
             other_cycles = cycles.copy()
             other_cycles.pop(index)
@@ -42,17 +46,21 @@ def draw_molecule(corners_array, graph: Graph, img):
             drawn_cycle_pts_dict[index] = points
         else:
             # used to construct line to reflect shape across
-            connected_nodes = list(set(cycles[list(drawn_cycles_that_are_connected)[0]]).intersection(set(cycle)))
+            connected_nodes = list(
+                set(cycles[list(drawn_cycles_that_are_connected)[0]]).intersection(set(cycle)))
 
             # !!! WHEN DRAWING 3 CONNECTED CYCLES, DETECTING AN EXTRA CYCLE THAT IS NOT A COMBINATION
             # OF THE SMALLER CYCLES, WHICH IS HOW WE DECIDE TO REMOVE THE LARGE CYCLE
             print("connected nodes", connected_nodes)
             print("connected cycles", connected_cycles)
-            print("drawn cycles that are connected", drawn_cycles_that_are_connected)
+            print("drawn cycles that are connected",
+                  drawn_cycles_that_are_connected)
             print("cycles", cycles)
             print("corner array values of connected", corners_array[connected_nodes[0]],
                   corners_array[connected_nodes[1]])
             print("connected cycles dictionary", connected_cycles_dict)
+            print(
+                '\n-----------------------------------------------------------------------------\n')
 
             # !! KEY ERROR IF > 2 CYCLES
             img = draw_connected_cycle_by_reflection(connected_nodes,
@@ -107,7 +115,8 @@ def draw_connected_cycle_by_reflection(connected_nodes, cycle_to_flip_points, im
     # flip original coordinates across line of connected points
     # only works for identical cycles
     # make line equation
-    pts = np.array([cycle_to_flip_points[connected_nodes[0]], cycle_to_flip_points[connected_nodes[1]]])
+    pts = np.array([cycle_to_flip_points[connected_nodes[0]],
+                    cycle_to_flip_points[connected_nodes[1]]])
 
     cv.circle(img, tuple(pts[0]), 10, (255, 0, 0), -1)
     cv.circle(img, tuple(pts[1]), 10, (255, 0, 0), -1)
