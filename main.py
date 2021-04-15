@@ -1,10 +1,9 @@
 import cv2 as cv
 import numpy as np
-from lines import draw_lines
-from corners import draw_corners
-from testConnected import find_connected_corners
-from detectCycle import Graph
-from output import draw_molecule
+from lib.feature_detection import draw_lines, draw_corners
+from lib.test_connected import find_connected_corners
+from lib.detect_cycle import Graph
+from lib.output import draw_molecule
 
 WINDOW_SIZE = (720, 1280, 3)
 COLOR_WHITE = (255, 255, 255)
